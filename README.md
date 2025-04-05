@@ -5,7 +5,7 @@
 
 Once the application is running, you can access the API at `https://localhost:****/swagger/index.html` to view the Swagger UI and interact with the endpoints.
 
-## Transaction Flow
+## transaction-service Flow
 
 ### Create a Transaction
 
@@ -38,7 +38,9 @@ Once the application is running, you can access the API at `https://localhost:**
 - `transaction-service.infrastructure`: Contains the infrastructure implementations.
 - `transaction-service.worker`: Contains the background services.
 
-## Antifraud-service Processing Flow
+It has its own mongodb: "transaction_service" to manage transaction persistence.
+
+## antifraud-service Processing Flow
 
 ### Background Service
 
@@ -51,6 +53,8 @@ The antifraud service runs as a background worker that listens to Kafka topics f
 - `antifraud-service.domain`: Contains the domain entities and interfaces.
 - `antifraud-service.infrastructure`: Contains the infrastructure implementations.
 - `antifraud-service.worker`: Contains the background services.
+
+It has its own mongodb: "antifraud_service" to manage the validation of the daily amount accumulation.
 
 ## General FLOW 
 
