@@ -1,5 +1,5 @@
 # Yepe
-** I didn't put there any authorization mechanism,As It is a Challenge, I assuming I were working in a security environment to focus just on the functionality.
+** I didn't include any authorization mechanism since this is a challenge. I assumed I was working in a secure environment, allowing me to focus solely on functionality.
 
 ### Access the API
 
