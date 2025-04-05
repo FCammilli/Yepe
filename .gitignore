@@ -1,0 +1,27 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/antifraud/.vs/antifraud
+/antifraud/antifraud-service.application/bin/Debug/net8.0
+/antifraud/antifraud-service.application/obj
+/antifraud/antifraud-service.domain/bin/Debug/net8.0
+/antifraud/antifraud-service.domain/obj
+/antifraud/antifraud-service.infrastructure/bin/Debug/net8.0
+/antifraud/antifraud-service.infrastructure/obj
+/antifraud/antifraud-service.worker/bin/Debug/net8.0
+/antifraud/antifraud-service.worker/obj
+/antifraud/antifraud.domain/bin/Debug/net8.0
+/antifraud/antifraud.domain/obj
+/antifraud/bin/Debug
+/antifraud/obj
+/antifraud/SharedKernel/bin/Debug/net8.0
+/antifraud/SharedKernel/obj
+/antifraud/transaction-service.api/bin/Debug/net8.0
+/antifraud/transaction-service.api/obj
+/antifraud/transaction-service.application/bin/Debug/net8.0
+/antifraud/transaction-service.application/obj
+/antifraud/transaction-service.domain/bin/Debug/net8.0
+/antifraud/transaction-service.domain/obj
+/antifraud/transaction-service.infrastructure/bin/Debug/net8.0
+/antifraud/transaction-service.infrastructure/obj
