@@ -65,7 +65,7 @@ The antifraud service runs as a background worker that listens to Kafka topics f
 3) TransactionAntiFraudProducer publishes an event type TransactionStatusUpdateEvent to the topic "transaction-updated".  
 4) If the transaction was approved, it save(or update)  a record with the amount into the antifraud_service database for future validation purposes.  
 
- - transaction-service (backend)  
+ - transaction-service (back)  
 1) TransactionUpdateConsumer listens for the event type TransactionStatusUpdateEvent.  
 2) Receives the event and updates the corresponding transaction status accordingly into the db for the corresponding  transaction .  
 
