@@ -27,6 +27,11 @@ public class TransactionController : ControllerBase
     /// Returns a 201 Created status code with the result if successful, otherwise returns a BadRequest result.
     /// </returns>
     [HttpPost(Name = "Create")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(string), 201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
+
     public async Task<ActionResult<string>> Transaction([FromBody] CreateTransactionDTO createTransactionDTO)
     {
         var result = await _transaccionService.Create(createTransactionDTO);
@@ -46,6 +51,11 @@ public class TransactionController : ControllerBase
     /// An ActionResult containing the transaction if found, otherwise a BadRequest or NotFound result.
     /// </returns>
     [HttpGet(Name = "Get")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(Transaction), 200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<Transaction>> Transaction([FromQuery] Guid transactionId, DateOnly? createdDate)
     {
         if (transactionId == Guid.Empty && createdDate == null)

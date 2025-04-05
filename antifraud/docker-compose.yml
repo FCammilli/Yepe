@@ -10,6 +10,8 @@ services:
       KafkaSettings__GroupId : antifraud-service
       MongoDbSettings__ConnectionString : mongodb://root:example@mongodb_transaction_service:27017
       MongoDbSettings__DatabaseName: transaction_service
+    networks:
+      - antifraud_network
     depends_on:
       - mongodb_transaction_service
 
@@ -24,9 +26,11 @@ services:
       KafkaSettings__GroupId : antifraud-service
       MongoDbSettings__ConnectionString : mongodb://root:example@mongodb_antifraud_service:27017
       MongoDbSettings__DatabaseName: antifraud_service
+    networks:
+      - antifraud_network
     depends_on:
       - mongodb_antifraud_service
-
+    
 #Kafka and Zookeeper
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
@@ -34,6 +38,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - antifraud_network
     ports:
       - "2181:2181"
   kafka:
@@ -48,6 +54,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - antifraud_network
     depends_on:
       - zookeeper
   kafka-ui:
@@ -69,6 +77,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - antifraud_network
     volumes:
       - mongo_data1:/data/db
 
@@ -81,9 +91,19 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - antifraud_network
     volumes:
       - mongo_data2:/data/db
 
 volumes:
   mongo_data1:
   mongo_data2:  
+  
+networks: 
+  antifraud_network:
+    name: antifraud_network
+    driver: bridge
+    
+    
+  
