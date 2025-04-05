@@ -1,0 +1,89 @@
+services:
+# transaction-api
+  transaction-service.api:
+    image: ${DOCKER_REGISTRY-}transactionserviceapi
+    build:
+      context: .
+      dockerfile: transaction-service.api/Dockerfile
+    environment:
+      KafkaSettings__BootstrapServers : kafka:9092
+      KafkaSettings__GroupId : antifraud-service
+      MongoDbSettings__ConnectionString : mongodb://root:example@mongodb_transaction_service:27017
+      MongoDbSettings__DatabaseName: transaction_service
+    depends_on:
+      - mongodb_transaction_service
+
+# antifraud-server
+  antifraud-service.worker:
+    image: ${DOCKER_REGISTRY-}antifraudserviceworker
+    build:
+      context: .
+      dockerfile: antifraud-service.worker/Dockerfile
+    environment:
+      KafkaSettings__BootstrapServers : kafka:9092
+      KafkaSettings__GroupId : antifraud-service
+      MongoDbSettings__ConnectionString : mongodb://root:example@mongodb_antifraud_service:27017
+      MongoDbSettings__DatabaseName: antifraud_service
+    depends_on:
+      - mongodb_antifraud_service
+
+#Kafka and Zookeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9092"
+    ports:
+      - "8080:8080"
+
+# MongoDB for transaction service
+  mongodb_transaction_service:
+    image: mongo:6.0
+    container_name: mongodb_transaction_service
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo_data1:/data/db
+
+# MongoDB for antifraud service
+  mongodb_antifraud_service:
+    image: mongo:6.0
+    container_name: mongodb_antifraud_service
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo_data2:/data/db
+
+volumes:
+  mongo_data1:
+  mongo_data2:  

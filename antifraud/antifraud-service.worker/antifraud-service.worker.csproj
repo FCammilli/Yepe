@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-antifraud_service.worker-2be03729-ecc4-4f0f-b717-f5478c097893</UserSecretsId>
+    <RootNamespace>antifraud_service.worker</RootNamespace>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.9.0" />
+    <PackageReference Include="librdkafka.redist" Version="2.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\antifraud-service.application\antifraud-service.application.csproj" />
+    <ProjectReference Include="..\antifraud-service.domain\antifraud-service.domain.csproj" />
+    <ProjectReference Include="..\antifraud-service.infrastructure\antifraud-service.infrastructure.csproj" />
+  </ItemGroup>
+</Project>

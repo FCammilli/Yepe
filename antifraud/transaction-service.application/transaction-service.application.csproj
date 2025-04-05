@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>transaction_service.application</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\antifraud.domain\antifraud.domain.csproj" />
+    <ProjectReference Include="..\transaction-service.domain\transaction-service.domain.csproj" />
+  </ItemGroup>
+
+</Project>
