@@ -1,4 +1,6 @@
 # Yepe
+** I didn't put there any authorization mechanism,As It is a Challenge, I assuming I were working in a security environment to focus just on the functionality.
+
 ### Access the API
 
 Once the application is running, you can access the API at `https://localhost:****/swagger/index.html` to view the Swagger UI and interact with the endpoints.
@@ -36,7 +38,7 @@ Once the application is running, you can access the API at `https://localhost:**
 - `transaction-service.infrastructure`: Contains the infrastructure implementations.
 - `transaction-service.worker`: Contains the background services.
 
-## Antifraud Processing Flow
+## Antifraud-service Processing Flow
 
 ### Background Service
 
@@ -50,7 +52,22 @@ The antifraud service runs as a background worker that listens to Kafka topics f
 - `antifraud-service.infrastructure`: Contains the infrastructure implementations.
 - `antifraud-service.worker`: Contains the background services.
 
-This command will build the Docker images and start the containers defined in the `docker-compose.yml` file.
+## General FLOW 
+
+- transaction-service  
+1) POST /Transaction -> (via a DTO) creates a transaction with a pending status.  
+2) Inserts the transaction into MongoDB, within the transactions collection inside the transaction_service database.  
+3) Publishes a TransactionCreatedEvent to Kafka, under the topic "transaction-created".  
+
+- antifraud-service  
+1) TransactionCreatedConsumer listens for the event type TransactionCreatedEvent.  
+2) TransactionCreatedConsumer processes the event and applies validation, approving or rejecting the transaction.  
+3) TransactionAntiFraudProducer publishes an event type TransactionStatusUpdateEvent to the topic "transaction-updated".  
+4) If the transaction was approved, it save(or update)  a record with the amount into the antifraud_service database for future validation purposes.  
+
+ - transaction-service (backend)  
+1) TransactionUpdateConsumer listens for the event type TransactionStatusUpdateEvent.  
+2) Receives the event and updates the corresponding transaction status accordingly into the db for the corresponding  transaction .  
 
 ### Access Kafka UI
 
