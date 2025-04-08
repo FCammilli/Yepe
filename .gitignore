@@ -29,3 +29,5 @@
 /antifraud/plantuml
 /antifraud/transaction-service.test/bin/Debug/net8.0
 /antifraud/transaction-service.test/obj
+/antifraud/antifraud-service.test/bin/Debug/net8.0
+/antifraud/antifraud-service.test/obj

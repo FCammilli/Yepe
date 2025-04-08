@@ -111,7 +111,6 @@ public class TransactionRepositoryTests
                   .Returns(false);
         mockCursor.Setup(c => c.Current).Returns(new[] { transaction });
 
-        // Mocking the IMongoCollection directly
         _mockCollection
             .Setup(c => c.FindAsync(
                 It.IsAny<FilterDefinition<Transaction>>(),

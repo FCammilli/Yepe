@@ -10,6 +10,10 @@
     <DockerServiceName>transaction-service.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="antifraud-service.test\application\AntiFraudServiceTests.cs" />
+    <None Include="antifraud-service.test\infraestructura\kafka\TransactionAntiFraudProducerTests.cs" />
+    <None Include="antifraud-service.test\infraestructura\mongo\DailyTransactionSummaryRepositoryTests.cs" />
+    <None Include="antifraud-service.test\infraestructura\TransactionCreatedConsumerTests.cs" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>

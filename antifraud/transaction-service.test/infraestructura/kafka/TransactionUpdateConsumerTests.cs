@@ -37,7 +37,6 @@ public class TransactionUpdateConsumerTests
             _mockLogger.Object
         );
 
-        // Inject the mocked consumer into the private field
         typeof(TransactionUpdateConsumer)
             .GetField("_consumer", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
             ?.SetValue(_transactionUpdateConsumer, _mockConsumer.Object);
@@ -47,7 +46,8 @@ public class TransactionUpdateConsumerTests
     public async Task StartListeningAsync_ShouldProcessValidMessage()
     {
         // Arrange
-        var cancellation = new CancellationTokenSource(TimeSpan.FromMilliseconds(10));
+        var cancellation = new CancellationTokenSource();
+        cancellation.CancelAfter(1000);
         var transactionEvent = new TransactionStatusUpdateEvent(
              Guid.NewGuid(),
              100,
@@ -66,7 +66,6 @@ public class TransactionUpdateConsumerTests
         // Act
         var listeningTask = _transactionUpdateConsumer.StartListeningAsync(cancellation.Token);
 
-        // Allow the consumer to process the message
         await Task.Delay(100);
 
         // Assert
@@ -81,8 +80,8 @@ public class TransactionUpdateConsumerTests
     public async Task StartListeningAsync_ShouldLogWarningForNullEvent()
     {
         // Arrange
-        var cancellation = new CancellationTokenSource(TimeSpan.FromMilliseconds(10));
-
+        var cancellation = new CancellationTokenSource();
+        cancellation.CancelAfter(1000);
         _mockConsumer
             .Setup(x => x.Consume(It.IsAny<TimeSpan>()))
             .Returns(new ConsumeResult<string, string>
@@ -113,8 +112,8 @@ public class TransactionUpdateConsumerTests
     public async Task StartListeningAsync_ShouldHandleException()
     {
         // Arrange
-        var cancellation = new CancellationTokenSource(TimeSpan.FromMilliseconds(10));
-
+        var cancellation = new CancellationTokenSource();
+        cancellation.CancelAfter(1000);
         _mockConsumer
             .Setup(x => x.Consume(It.IsAny<TimeSpan>()))
             .Throws(new Exception("Test exception"));

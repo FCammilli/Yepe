@@ -38,12 +38,19 @@ public class TransactionCreatedConsumer : IAntifraudTransactionCreatedConsumer
                 {
                     var consumeResult = _consumer.Consume(cancellationToken);
                     var message = consumeResult.Message.Value;
+
+                    if (message == null)
+                    {
+                        _logger.LogWarning("Received null transaction event.");
+                        continue;
+                    }
+
                     var transactionEvent = JsonConvert.DeserializeObject<TransactionCreatedEvent>(message);
                     _logger.LogInformation($"Event received: {message}");
 
                     if (transactionEvent == null)
                     {
-                        _logger.LogWarning("Received null transaction event.");
+                        _logger.LogWarning("Null conversion to transaction event.");
                         continue;
                     }
 

@@ -25,11 +25,9 @@ public class TransactionProducerTests
 
         _mockKafkaSettings.Setup(x => x.Value).Returns(kafkaSettings);
 
-        // Mock ProducerBuilder to return the mocked producer
         var mockProducerBuilder = new Mock<ProducerBuilder<string, string>>(It.IsAny<ProducerConfig>());
         mockProducerBuilder.Setup(x => x.Build()).Returns(_mockProducer.Object);
 
-        // Use reflection to set the private _producer field
         _transactionProducer = new TransactionProducer(_mockKafkaSettings.Object);
         var producerField = typeof(TransactionProducer).GetField("_producer", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         producerField.SetValue(_transactionProducer, _mockProducer.Object);
