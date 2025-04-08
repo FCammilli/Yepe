@@ -15,5 +15,9 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="transaction-service.test\api\TransactionControllerTests.cs" />
+    <None Include="transaction-service.test\application\services\TransactionServiceTests.cs" />
+    <None Include="transaction-service.test\infraestructura\kafka\TransactionUpdateConsumerTests.cs" />
+    <None Include="transaction-service.test\infraestructura\mongo\TransactionRepositoryTests.cs" />
   </ItemGroup>
 </Project>

@@ -27,3 +27,5 @@
 /antifraud/transaction-service.infrastructure/obj
 /antifraud/.vs/ProjectEvaluation
 /antifraud/plantuml
+/antifraud/transaction-service.test/bin/Debug/net8.0
+/antifraud/transaction-service.test/obj

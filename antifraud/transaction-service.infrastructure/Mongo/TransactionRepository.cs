@@ -25,7 +25,7 @@ public class TransactionRepository : ITransactionRepository
             Builders<Transaction>.Filter.Eq(x => x.Id, transactionId)
         );
         var update = Builders<Transaction>.Update.Set(x => x.Status, transactionStatus);
-        await _collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = false });
+        await _collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
     }
 
     public async Task<Transaction> Get(Guid transactionId, DateOnly createdAt)

@@ -45,12 +45,19 @@ public class TransactionUpdateConsumer : ITransactionUpdateConsumer
                     }
 
                     var message = consumeResult.Message.Value;
-                    var transactionEvent = JsonConvert.DeserializeObject<TransactionStatusUpdateEvent>(message);
+
+                    if (message == null)
+                    {
+                        _logger.LogWarning("Received null transaction event.");
+                        continue;
+                    }
+
+                    var transactionEvent = JsonConvert.DeserializeObject<TransactionStatusUpdateEvent?>(message);
                     _logger.LogInformation($"Event received: {message}");
 
                     if (transactionEvent == null)
                     {
-                        _logger.LogWarning("Received null transaction event.");
+                        _logger.LogWarning("Null conversion to transaction event.");
                         continue;
                     }
 
