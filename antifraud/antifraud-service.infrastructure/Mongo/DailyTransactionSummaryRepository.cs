@@ -17,7 +17,9 @@ public class DailyTransactionSummaryRepository : IDailyTransactionSummaryReposit
             Builders<domain.Entities.DailyTransactionSummary>.Filter.Eq(x => x.SourceAccountId, sourceAccountId),
             Builders<domain.Entities.DailyTransactionSummary>.Filter.Eq(x => x.Date, date.Date)
         );
-        var summary = await _collection.Find(filter).FirstOrDefaultAsync();
+
+        var result = await _collection.FindAsync(filter);
+        var summary = result?.FirstOrDefault();
         return summary?.TotalApprovedValue ?? 0;
     }
 
