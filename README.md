@@ -83,11 +83,14 @@ Once the application is running, you can access the Kafka UI at `http://localhos
 The service is configured to connect to a Kafka broker and listen to specific topics. The configuration settings are provided through environment variables:
 
 - `KafkaSettings__BootstrapServers`: The Kafka broker address (e.g., `kafka:9092`).
-## Architecture diagram  
+## Architecture/Class diagram  
 ### transaction-service 
 ![transaction-service](transaction-service.diagram.png)
 ### antidfraud-service 
 ![antidfraud-service](antifraud-service.diagram.png)
+## Componets diagram  
+![components](component.diagram.png)
+
 
 ## Contributing
 
