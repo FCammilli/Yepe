@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using transaction_service.api;
 using transaction_service.api.Extensions;
-using transaction_service.application.Services;
 using transaction_service.infrastructure.Kafka;
 using transaction_service.infrastructure.Mongo;
 
@@ -19,7 +19,7 @@ builder.Services.AddServices();
 builder.Services.AddRepositories();
 builder.Services.AddKafkaComponents();
 
-//builder.Services.AddHostedService<TransactionWorker>();
+builder.Services.AddHostedService<TransactionWorker>();
 
 builder.Services.AddLogging(configure => configure.AddConsole());
 
@@ -46,12 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-Task.Run(async () =>
-{
-    var cancellationToken = new CancellationTokenSource();
-    var transactionUpdateConsumer = app.Services.GetRequiredService<ITransactionUpdateConsumer>();
-    await transactionUpdateConsumer.StartListeningAsync(cancellationToken.Token);
-});
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

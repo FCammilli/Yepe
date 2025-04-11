@@ -12,6 +12,6 @@ public class TransactionWorker : BackgroundService
     }
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await _consumer.StartListeningAsync(stoppingToken);
+        await Task.Run(() => _consumer.StartListeningAsync(stoppingToken), stoppingToken);
     }
 }
